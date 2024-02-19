@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to HoTMiXer!</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script src="https://unpkg.com/htmx.org@1.9.9"></script>
+</head>
+<body>
+    <nav class="navbar is-light" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                <img src="/static/hotmix_logo.png" alt="Put Logo Here" style="max-height: 3rem;">
+            </a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+    
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item">
+                    About
+                </a>
+                <a class="navbar-item">
+                    Pricing
+                </a>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        Account
+                    </a>
+                    <div class="navbar-dropdown">
+                        <!-- Dropdown items -->
+                        <a class="navbar-item">
+                            Profile
+                        </a>
+                        <a class="navbar-item">
+                            Settings
+                        </a>
+                        <hr class="navbar-divider">
+                        <a class="navbar-item">
+                            Logout
+                        </a>
+                    </div>
+                </div>
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a class="button is-primary modal-button" data-target="auth-modal">
+                            <strong>Sign up</strong>
+                        </a>
+                        <a class="button is-light modal-button" data-target="auth-modal">
+                            Log in
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+<!-- Modal Structure -->
+<div id="auth-modal" class="modal">
+    
+<form class="box has-background-white">
+    <h2 class="title has-text-centered has-text-dark">
+        Signin
+    </h2>
+    <div class="field">
+        <p class="control">
+            <input type="email" class="input" placeholder="Email"/>
+            </p>
+        </div>
+        <div class="field">
+            <p class="control">
+                <input type="password" class="input" placeholder="Password"/>
+                </p>
+            </div>
+            <div class="field">
+                <p class="control has-text-centered">
+                    <button class="button is-success">
+                        Login
+                    </button>
+                </p>
+            </div>
+        </form>
+
+</div>
+
+    <!-- Content Section -->
+    <section class="section">
+        <div class="container">
+            <!-- Your content here -->
+        </div>
+    </section>
+
+    <!-- Bulma and HTMX Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Bulma modal trigger
+            var $modalButtons = Array.prototype.slice.call(document.querySelectorAll('.modal-button'), 0);
+            var $modalCloses = Array.prototype.slice.call(document.querySelectorAll('.modal .delete'), 0);
+            var $tabs = Array.prototype.slice.call(document.querySelectorAll('.tabs li'), 0);
+            var $tabContents = Array.prototype.slice.call(document.querySelectorAll('.tab-content'), 0);
+    
+            // Modal open and close handlers
+            if ($modalButtons.length > 0) {
+                $modalButtons.forEach(function ($el) {
+                    $el.addEventListener('click', function () {
+                        var target = $el.dataset.target;
+                        var $target = document.getElementById(target);
+                        $target.classList.add('is-active');
+                    });
+                });
+            }
+    
+            if ($modalCloses.length > 0) {
+                $modalCloses.forEach(function ($el) {
+                    $el.addEventListener('click', function () {
+                        $el.parentNode.parentNode.parentNode.classList.remove('is-active');
+                    });
+                });
+            }
+    
+            // Tab switch handlers
+            if ($tabs.length > 0) {
+                $tabs.forEach(function ($tab) {
+                    $tab.addEventListener('click', function () {
+                        $tabs.forEach(function ($tab) {
+                            $tab.classList.remove('is-active');
+                        });
+                        $tabContents.forEach(function ($content) {
+                            $content.classList.remove('is-active');
+                        });
+                        $tab.classList.add('is-active');
+                        document.getElementById($tab.dataset.tab).classList.add('is-active');
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
